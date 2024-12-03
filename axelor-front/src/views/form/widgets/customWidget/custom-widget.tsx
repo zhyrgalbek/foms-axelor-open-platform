@@ -165,8 +165,11 @@ export function CustomWidget() {
                 localStorage.setItem("outgoingCall", JSON.stringify(data));
             }
 
-            if (eventName === "removeCallNumber") {
+            if (eventName === "removeIncomingCall") {
                 localStorage.removeItem("incomingCall");
+            }
+            
+            if (eventName === "removeOutgoingCall") {
                 localStorage.removeItem("outgoingCall");
             }
 
