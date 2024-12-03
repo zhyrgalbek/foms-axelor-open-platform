@@ -161,8 +161,13 @@ export function CustomWidget() {
                 localStorage.setItem("incomingCall", JSON.stringify(data));
             }
 
+            if (eventName === "outgoingCall") {
+                localStorage.setItem("outgoingCall", JSON.stringify(data));
+            }
+
             if (eventName === "removeCallNumber") {
                 localStorage.removeItem("incomingCall");
+                localStorage.removeItem("outgoingCall");
             }
 
             if (dialogContainerClass.includes("minimized")) {
