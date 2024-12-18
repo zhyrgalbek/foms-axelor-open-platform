@@ -352,67 +352,67 @@ function FarItems() {
   return (
     <CommandBar
       items={[
-        {
-          key: "fav",
-          text: i18n.get("Favorite"),
-          iconOnly: true,
-          iconProps: {
-            icon: "star",
-          },
-          render: FavoriteItem,
-        },
-        {
-          key: "messages",
-          text: i18n.get("Messages"),
-          icon: (props: any) => (
-            <BadgeIcon
-              {...props}
-              icon="notifications"
-              count={currentTaskCount + unreadMailCount}
-            />
-          ),
-          iconOnly: true,
-          iconProps: {
-            icon: "notifications",
-          },
-          items: [
-            {
-              key: "mail.messages",
-              text: "Messages",
-              subtext: unreadMailCount
-                ? i18n.get("{0} messages", unreadMailCount)
-                : i18n.get("no messages"),
-              onClick: () => {
-                const tabId = "mail.inbox";
-                openTab(tabId);
-                if (unreadMailCount) {
-                  const event = new CustomEvent("tab:refresh", {
-                    detail: { id: tabId },
-                  });
-                  document.dispatchEvent(event);
-                }
-              },
-            },
-            { key: "m-div-1", divider: true },
-            {
-              key: "tasks.due",
-              text: i18n.get("Tasks due"),
-              subtext: pendingTaskCount
-                ? i18n.get("{0} tasks", pendingTaskCount)
-                : i18n.get("no tasks"),
-              onClick: () => openTab("team.tasks.due"),
-            },
-            { key: "m-div-2", divider: true },
-            {
-              key: "tasks.todo",
-              text: i18n.get("Tasks todo"),
-              subtext: currentTaskCount
-                ? i18n.get("{0} tasks", currentTaskCount)
-                : i18n.get("no tasks"),
-              onClick: () => openTab("team.tasks.todo"),
-            },
-          ],
-        },
+        // {
+        //   key: "fav",
+        //   text: i18n.get("Favorite"),
+        //   iconOnly: true,
+        //   iconProps: {
+        //     icon: "star",
+        //   },
+        //   render: FavoriteItem,
+        // },
+        // {
+        //   key: "messages",
+        //   text: i18n.get("Messages"),
+        //   icon: (props: any) => (
+        //     <BadgeIcon
+        //       {...props}
+        //       icon="notifications"
+        //       count={currentTaskCount + unreadMailCount}
+        //     />
+        //   ),
+        //   iconOnly: true,
+        //   iconProps: {
+        //     icon: "notifications",
+        //   },
+        //   items: [
+        //     {
+        //       key: "mail.messages",
+        //       text: "Messages",
+        //       subtext: unreadMailCount
+        //         ? i18n.get("{0} messages", unreadMailCount)
+        //         : i18n.get("no messages"),
+        //       onClick: () => {
+        //         const tabId = "mail.inbox";
+        //         openTab(tabId);
+        //         if (unreadMailCount) {
+        //           const event = new CustomEvent("tab:refresh", {
+        //             detail: { id: tabId },
+        //           });
+        //           document.dispatchEvent(event);
+        //         }
+        //       },
+        //     },
+        //     { key: "m-div-1", divider: true },
+        //     {
+        //       key: "tasks.due",
+        //       text: i18n.get("Tasks due"),
+        //       subtext: pendingTaskCount
+        //         ? i18n.get("{0} tasks", pendingTaskCount)
+        //         : i18n.get("no tasks"),
+        //       onClick: () => openTab("team.tasks.due"),
+        //     },
+        //     { key: "m-div-2", divider: true },
+        //     {
+        //       key: "tasks.todo",
+        //       text: i18n.get("Tasks todo"),
+        //       subtext: currentTaskCount
+        //         ? i18n.get("{0} tasks", currentTaskCount)
+        //         : i18n.get("no tasks"),
+        //       onClick: () => openTab("team.tasks.todo"),
+        //     },
+        //   ],
+        // },
         {
           key: "user",
           text: i18n.get("User"),
@@ -454,16 +454,16 @@ function FarItems() {
                     onClick: () => openHomePage(data.application.home),
                   },
                 ]),
-            {
-              key: "shortcuts",
-              text: i18n.get("Shortcuts"),
-              onClick: showShortcuts,
-            },
-            {
-              key: "about",
-              text: i18n.get("About"),
-              onClick: showAbout,
-            },
+            // {
+            //   key: "shortcuts",
+            //   text: i18n.get("Shortcuts"),
+            //   onClick: showShortcuts,
+            // },
+            // {
+            //   key: "about",
+            //   text: i18n.get("About"),
+            //   onClick: showAbout,
+            // },
             {
               key: "logout",
               text: i18n.get("Log out"),
@@ -476,20 +476,20 @@ function FarItems() {
   );
 }
 
-function showAbout() {
-  dialogs.info({
-    title: i18n.get("About"),
-    content: <About />,
-  });
-}
+// function showAbout() {
+//   dialogs.info({
+//     title: i18n.get("About"),
+//     content: <About />,
+//   });
+// }
 
-function showShortcuts() {
-  dialogs.info({
-    size: "md",
-    title: i18n.get("Keyboard Shortcuts"),
-    content: <Shortcuts />,
-  });
-}
+// function showShortcuts() {
+//   dialogs.info({
+//     size: "md",
+//     title: i18n.get("Keyboard Shortcuts"),
+//     content: <Shortcuts />,
+//   });
+// }
 
 function openHomePage(homePage: string | undefined) {
   if (homePage) {

@@ -150,10 +150,6 @@ export function CustomWidget() {
                 return;
             }
 
-            // Обработка сообщения
-            // if (typeof event.data === "string") {
-            //     console.log("Сообщение из iframe:", JSON.parse(event.data));
-            // }
 
             let { event: eventName, data } = event.data;
 
@@ -168,9 +164,13 @@ export function CustomWidget() {
             if (eventName === "removeIncomingCall") {
                 localStorage.removeItem("incomingCall");
             }
-            
+
             if (eventName === "removeOutgoingCall") {
                 localStorage.removeItem("outgoingCall");
+            }
+
+            if (eventName === "removeActionOutgoingCall") {
+                localStorage.removeItem("actionOutgoingCall");
             }
 
             if (dialogContainerClass.includes("minimized")) {
@@ -178,7 +178,38 @@ export function CustomWidget() {
                 setIframeClasses(`${classes.iframePhone}`);
             }
         });
+
     }, [dialogContainerClass, iframeClasses])
+
+    useEffect(() => {
+        const handleOutgoingCall = () => {
+            const actionOutgoingCall = localStorage.getItem("actionOutgoingCall");
+            if (actionOutgoingCall) {
+                const parsedData = JSON.parse(actionOutgoingCall);
+                console.log("Обрабатываем вызов:", parsedData);
+                // Добавьте логику для обработки вызова
+                let win = iframeRef.current?.contentWindow;
+                if (win) {
+                    win.postMessage({ event: "actionOutgoingCall", phoneNumber: parsedData }, `https://${defaultOption.SipDomain}`);
+                }
+            }
+        }
+
+        handleOutgoingCall();
+
+        const handleStorageEvent = (event: any) => {
+            if (event.key === "actionOutgoingCall") {
+                handleOutgoingCall();
+            }
+        }
+
+        window.addEventListener("storage", handleStorageEvent);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageEvent);
+        }
+
+    }, [])
 
     const onMouseMove = (e: MouseEvent) => {
         if (!isDragging || !dialogDiv.current) return;
@@ -233,18 +264,6 @@ export function CustomWidget() {
                                     setIframeClasses(`${classes.iframePhone} ${classes.iframePhoneNone}`)
                                 }
                             }}><RemovIcon /></button>
-                            {/* <button style={{ marginLeft: '10px' }} className={classes.button} onClick={() => {
-                                if (dialogContainerClass.includes("maximized")) {
-                                    setDialogContainerClass(`${classes.dialogContainer}`);
-                                    // setDialogStyle({
-                                    //     right: '1672px',
-                                    //     bottom: '687px'
-                                    // })
-                                } else {
-                                    setDialogContainerClass(`${classes.dialogContainer} ${classes.maximized}`);
-                                    setIframeClasses(`${classes.iframePhone}`);
-                                }
-                            }}><SpaceIcon /></button> */}
                         </div>
 
                     </div>
