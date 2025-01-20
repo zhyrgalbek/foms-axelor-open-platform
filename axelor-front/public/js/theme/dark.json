@@ -14,8 +14,8 @@
     "secondary_bg": "#30334E",
     "tertiary_bg": "#3F425C",
 
-    "primary": "#666CFF",
-    "secondary": "#6D788D"
+    "primary": "#2283d9",
+    "secondary": "#0083DA"
   },
   "border": {
     "color": "rgba(234, 234, 255, 0.12)"
@@ -63,7 +63,7 @@
         "bg": "rgba(234, 234, 255, 0.05)"
       },
       "item_active": {
-        "bg": "rgba(var(--bs-primary-rgb), 0.25)",
+        "bg": "rgba(var(--bs-primary-rgb), 0.8)",
         "color": "white"
       },
       "icon": {

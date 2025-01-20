@@ -11,7 +11,10 @@
     "black": "#333",
 
     "body_color": "#5A5A7C",
-    "emphasis_color": "#33325B"
+    "emphasis_color": "#33325B",
+
+    "primary": "#2283d9",
+    "secondary": "#0083DA"
   },
   "border": {
     "color": "#EAEAFE"
