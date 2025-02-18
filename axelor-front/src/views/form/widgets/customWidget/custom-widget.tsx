@@ -60,10 +60,10 @@ export function CustomWidget() {
         welcomeScreen: false,
         profileName: "",
         EnableAccountSettings: false,
-        wssServer: "call.brisklyminds.com",
+        wssServer: "call.foms.kg",
         WebSocketPort: "443",
         ServerPath: "/ws",
-        SipDomain: "call.brisklyminds.com",
+        SipDomain: "call.foms.kg",
         SipUsername: "",
         SipPassword: "",
         VoiceMailSubscribe: true,
@@ -268,7 +268,7 @@ export function CustomWidget() {
 
                     </div>
                     <div style={{ width: '100%', height: '490px' }}>
-                        <iframe ref={iframeRef} sandbox="allow-same-origin allow-scripts" allow="microphone; camera" src={`https://${defaultOption.SipDomain}/phone/phone/index.html`} frameBorder="0" width="100%" height="100%" className={iframeClasses}>
+                        <iframe ref={iframeRef} sandbox="allow-same-origin allow-scripts" allow="microphone; camera" src={`https://${defaultOption.SipDomain}/phone/index.html`} frameBorder="0" width="100%" height="100%" className={iframeClasses}>
 
                         </iframe>
                     </div>
