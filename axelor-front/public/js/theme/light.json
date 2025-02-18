@@ -27,7 +27,7 @@
   "components": {
     "Shell": {
       "sidebar": {
-        "bg": "#F8F8FF"
+        "bg": "#fff"
       }
     },
     "Panel": {
