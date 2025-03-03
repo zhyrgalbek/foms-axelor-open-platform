@@ -20,7 +20,7 @@ import "../utils/globals";
 
 import { useDevice, useResponsive } from "@/hooks/use-responsive";
 import { MaterialIcon } from "@axelor/ui/icons/material-icon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./layout.module.scss";
 import { useSidebar } from "./nav-drawer/hook";
 import { CustomWidget } from "@/views/form/widgets";
@@ -31,8 +31,30 @@ export function Layout() {
   const { xs } = useResponsive();
   const { isMobile } = useDevice();
   const { pathname } = useLocation();
-
+  const [showPhone, setShowPhone] = useState<boolean>(false);
   const [tabContainer, tabContainerRef] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleStartPhone = () => {
+      const startPhone = localStorage.getItem("registrationPhone");
+      if (startPhone) {
+        const parsedData = JSON.parse(startPhone);
+        setShowPhone(parsedData.turnOnOff);
+        localStorage.removeItem("registrationPhone");
+      }
+    }
+    handleStartPhone();
+    const handleStorageEvent = (event: any) => {
+      if (event.key === "registrationPhone") {
+        handleStartPhone();
+      }
+    }
+    window.addEventListener("storage", handleStorageEvent);
+    return () => {
+      window.removeEventListener("storage", handleStorageEvent);
+    }
+  }, []);
+
 
   useAppHead();
 
@@ -74,7 +96,7 @@ export function Layout() {
       <DialogsProvider />
       <AlertsProvider />
       <HttpWatch />
-      <CustomWidget />
+      {showPhone && <CustomWidget />}
     </div>
   );
 }

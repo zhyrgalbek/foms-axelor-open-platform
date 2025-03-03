@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import classes from "./custom-widget.module.scss";
 import { http } from "@/services/http";
-
 interface OptionType {
     wssServer: string,
     WebSocketPort: string,
@@ -14,7 +13,6 @@ interface OptionType {
     RecordAllCalls: boolean,
     FixedNumber: string
 }
-
 interface DefaultOptionType extends OptionType {
     loadAlternateLang: boolean,
     welcomeScreen: boolean,
@@ -24,18 +22,15 @@ interface DefaultOptionType extends OptionType {
     EnableTextMessaging: boolean,
     SingleInstance: boolean
 }
-
 declare global {
     interface Window {
         phoneOptions: DefaultOptionType;
     }
 }
-
 interface CoordinateType {
     offsetX: number | null,
     offsetY: number | null
 }
-
 interface DialogStyleType {
     right: string,
     bottom: string
@@ -55,6 +50,7 @@ export function CustomWidget() {
     const [iframeClasses, setIframeClasses] = useState<string>(`${classes.iframePhone}`);
     const dialogDiv = useRef<HTMLDivElement>(null);
     const iframeRef = useRef<HTMLIFrameElement>(null);
+    const [reloadPhone, setReloadPhone] = useState<boolean>(false);
     const [defaultOption, setDefaultOption] = useState<DefaultOptionType>({
         loadAlternateLang: true,
         welcomeScreen: false,
@@ -74,33 +70,6 @@ export function CustomWidget() {
         NotificationsActive: true,
         FixedNumber: ""
     });
-
-    useEffect(() => {
-        const fetchData = async () => {
-            let data = await initializationAsterisk();
-            if (data.asteriskLogin && data.asteriskPassword) {
-                let newDefaultOption = {
-                    ...defaultOption,
-                    profileName: data.fullName,
-                    SipUsername: data.asteriskLogin,
-                    SipPassword: data.asteriskPassword
-                }
-                setDefaultOption(newDefaultOption);
-            }
-        }
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        if (defaultOption.SipUsername && defaultOption.SipPassword) {
-            setTimeout(() => {
-                let win = iframeRef.current?.contentWindow;
-                if (win) {
-                    win.postMessage(JSON.stringify(defaultOption), `https://${defaultOption.SipDomain}`);
-                }
-            }, 1000)
-        }
-    }, [defaultOption])
 
     const initializationAsterisk = async () => {
         try {
@@ -143,74 +112,6 @@ export function CustomWidget() {
         }
     }
 
-    useEffect(() => {
-        window.addEventListener("message", (event) => {
-            // Проверка отправителя (origin) для безопасности
-            if (event.origin !== `https://${defaultOption.SipDomain}`) {
-                return;
-            }
-
-
-            let { event: eventName, data } = event.data;
-
-            if (eventName === "incomingCall") {
-                localStorage.setItem("incomingCall", JSON.stringify(data));
-            }
-
-            if (eventName === "outgoingCall") {
-                localStorage.setItem("outgoingCall", JSON.stringify(data));
-            }
-
-            if (eventName === "removeIncomingCall") {
-                localStorage.removeItem("incomingCall");
-            }
-
-            if (eventName === "removeOutgoingCall") {
-                localStorage.removeItem("outgoingCall");
-            }
-
-            if (eventName === "removeActionOutgoingCall") {
-                localStorage.removeItem("actionOutgoingCall");
-            }
-
-            if (dialogContainerClass.includes("minimized")) {
-                setDialogContainerClass(`${classes.dialogContainer}`);
-                setIframeClasses(`${classes.iframePhone}`);
-            }
-        });
-
-    }, [dialogContainerClass, iframeClasses])
-
-    useEffect(() => {
-        const handleOutgoingCall = () => {
-            const actionOutgoingCall = localStorage.getItem("actionOutgoingCall");
-            if (actionOutgoingCall) {
-                const parsedData = JSON.parse(actionOutgoingCall);
-                console.log("Обрабатываем вызов:", parsedData);
-                // Добавьте логику для обработки вызова
-                let win = iframeRef.current?.contentWindow;
-                if (win) {
-                    win.postMessage({ event: "actionOutgoingCall", phoneNumber: parsedData }, `https://${defaultOption.SipDomain}`);
-                }
-            }
-        }
-
-        handleOutgoingCall();
-
-        const handleStorageEvent = (event: any) => {
-            if (event.key === "actionOutgoingCall") {
-                handleOutgoingCall();
-            }
-        }
-
-        window.addEventListener("storage", handleStorageEvent);
-
-        return () => {
-            window.removeEventListener("storage", handleStorageEvent);
-        }
-
-    }, [])
-
     const onMouseMove = (e: MouseEvent) => {
         if (!isDragging || !dialogDiv.current) return;
         if (coordinate.offsetX && coordinate.offsetY) {
@@ -245,6 +146,103 @@ export function CustomWidget() {
         window.addEventListener('mouseup', onMouseUp);
 
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let data = await initializationAsterisk();
+            if (data.asteriskLogin && data.asteriskPassword) {
+                let newDefaultOption = {
+                    ...defaultOption,
+                    profileName: data.fullName,
+                    SipUsername: data.asteriskLogin,
+                    SipPassword: data.asteriskPassword
+                }
+                setDefaultOption(newDefaultOption);
+            }
+        }
+        fetchData();
+    }, [reloadPhone]);
+
+    useEffect(() => {
+        if (defaultOption.SipUsername && defaultOption.SipPassword) {
+            setTimeout(() => {
+                let win = iframeRef.current?.contentWindow;
+                if (win) {
+                    win.postMessage(JSON.stringify(defaultOption), `https://${defaultOption.SipDomain}`);
+                }
+            }, 1000)
+        }
+    }, [defaultOption]);
+
+    useEffect(() => {
+        window.addEventListener("message", (event) => {
+            // Проверка отправителя (origin) для безопасности
+            if (event.origin !== `https://${defaultOption.SipDomain}`) {
+                return;
+            }
+
+            let { event: eventName, data } = event.data;
+
+            if (eventName === "incomingCall") {
+                localStorage.setItem("incomingCall", JSON.stringify(data));
+            }
+
+            if (eventName === "outgoingCall") {
+                localStorage.setItem("outgoingCall", JSON.stringify(data));
+            }
+
+            if (eventName === "removeIncomingCall") {
+                localStorage.removeItem("incomingCall");
+            }
+
+            if (eventName === "removeOutgoingCall") {
+                localStorage.removeItem("outgoingCall");
+            }
+
+            if (eventName === "removeActionOutgoingCall") {
+                localStorage.removeItem("actionOutgoingCall");
+            }
+
+            if (eventName === "reload") {
+                setReloadPhone(!reloadPhone);
+            }
+
+            if (dialogContainerClass.includes("minimized")) {
+                setDialogContainerClass(`${classes.dialogContainer}`);
+                setIframeClasses(`${classes.iframePhone}`);
+            }
+        });
+
+    }, [dialogContainerClass, iframeClasses]);
+
+    useEffect(() => {
+        const handleOutgoingCall = () => {
+            const actionOutgoingCall = localStorage.getItem("actionOutgoingCall");
+            if (actionOutgoingCall) {
+                const parsedData = JSON.parse(actionOutgoingCall);
+               
+                let win = iframeRef.current?.contentWindow;
+                if (win) {
+                    win.postMessage({ event: "actionOutgoingCall", phoneNumber: parsedData }, `https://${defaultOption.SipDomain}`);
+                }
+            }
+        }
+
+        handleOutgoingCall();
+
+        const handleStorageEvent = (event: any) => {
+            if (event.key === "actionOutgoingCall") {
+                handleOutgoingCall();
+            }
+        }
+
+        window.addEventListener("storage", handleStorageEvent);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageEvent);
+        }
+
+    }, []);
 
     return (
         <div className={classes.customWidget}>
