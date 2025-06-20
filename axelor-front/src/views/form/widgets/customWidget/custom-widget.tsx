@@ -266,7 +266,7 @@ export function CustomWidget() {
 
                     </div>
                     <div style={{ width: '100%', height: '490px' }}>
-                        <iframe ref={iframeRef} sandbox="allow-same-origin allow-scripts" allow="microphone; camera" src={`https://${defaultOption.SipDomain}/phone/index.html`} frameBorder="0" width="100%" height="100%" className={iframeClasses}>
+                        <iframe ref={iframeRef} sandbox="allow-same-origin allow-scripts" allow="microphone; camera" src={`https://${defaultOption.SipDomain}/phone/phone/index.html`} frameBorder="0" width="100%" height="100%" className={iframeClasses}>
 
                         </iframe>
                     </div>

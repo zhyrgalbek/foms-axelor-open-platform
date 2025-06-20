@@ -40,7 +40,6 @@ export function Layout() {
       if (startPhone) {
         const parsedData = JSON.parse(startPhone);
         setShowPhone(parsedData.turnOnOff);
-        localStorage.removeItem("registrationPhone");
       }
     }
     handleStartPhone();
