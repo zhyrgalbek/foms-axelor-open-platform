@@ -14,7 +14,7 @@ import {
   MaterialIcon,
   MaterialIconProps,
 } from "@axelor/ui/icons/material-icon";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { dialogs } from "@/components/dialogs";
@@ -45,6 +45,7 @@ import Avatar from "@/views/form/widgets/mail-messages/avatar/avatar";
 import { quick } from "./utils";
 
 import styles from "./nav-header.module.scss";
+import { initCurrentUserRoles } from "@/views/form/widgets/current-user-roles/current-user-roles";
 
 function BadgeIcon({
   count,
@@ -330,6 +331,10 @@ function QuickMenuBar() {
 function FarItems() {
   const { data, logout } = useSession();
   const { unread: unreadMailCount } = useTagsMail();
+  const [currentUserRoles, setCurrentUserRoles] = useState<Record<
+    string,
+    any
+  > | null>(null);
   const { current: currentTaskCount, pending: pendingTaskCount } =
     useTagsTasks();
 
@@ -348,6 +353,18 @@ function FarItems() {
       },
     });
   }, [showEditor]);
+
+  const fetchUserRoles = async (currentUser: Record<string, any>) => {
+    const userRoles = await initCurrentUserRoles(currentUser);
+    setCurrentUserRoles(userRoles ?? null);
+  };
+
+  useEffect(() => {
+    const currentUser = data?.user;
+    if (!currentUser) return;
+
+    fetchUserRoles(currentUser);
+  }, [data]);
 
   return (
     <CommandBar
@@ -464,11 +481,15 @@ function FarItems() {
             //   text: i18n.get("About"),
             //   onClick: showAbout,
             // },
-            {
-              key: "logout",
-              text: i18n.get("Log out"),
-              onClick: () => logout(),
-            },
+            ...(currentUserRoles?.isOperator
+              ? []
+              : [
+                  {
+                    key: "logout",
+                    text: i18n.get("Log out "),
+                    onClick: () => logout(),
+                  },
+                ]),
           ],
         },
       ]}
