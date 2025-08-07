@@ -12,8 +12,8 @@ export default function ChatInterface() {
     const positionRef = useRef({ x: 987, y: 143 })
     const offsetRef = useRef({ x: 0, y: 0 });
     const draggingRef = useRef(false);
-    const [width, setWidth] = useState<string>("1000px");
-    const [height, setHeight] = useState<string>("1020px");
+    const [width, setWidth] = useState<string>("0");
+    const [height, setHeight] = useState<string>("0");
     const scale = 0.7;
 
     const handleMouseDown = (e: React.MouseEvent) => {
