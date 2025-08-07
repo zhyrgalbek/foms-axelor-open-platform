@@ -24,6 +24,8 @@ import { useEffect, useState } from "react";
 import styles from "./layout.module.scss";
 import { useSidebar } from "./nav-drawer/hook";
 import { CustomWidget } from "@/views/form/widgets";
+import ChatInterface from "@/views/chat/ChatInterface";
+
 
 export function Layout() {
   const { loading } = useMenu();
@@ -96,6 +98,7 @@ export function Layout() {
       <AlertsProvider />
       <HttpWatch />
       {showPhone && <CustomWidget />}
+      <ChatInterface />
     </div>
   );
 }
