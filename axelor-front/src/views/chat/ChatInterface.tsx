@@ -2,7 +2,7 @@ import { Badge, Box, Button, Card, Grid, IconButton, Stack, Typography } from "@
 import Contacts from "./Contacts";
 import ChatBox from "./ChatBox";
 import { ChatBoxVariant, ClientType, ColleaguesType } from "./types/chatTypes";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { SnackbarProvider } from "notistack";
 import ClearIcon from '@mui/icons-material/Clear';
@@ -11,7 +11,7 @@ import { useChatStore } from "./store/chatStore";
 
 export default function ChatInterface() {
     const cardRef = useRef<HTMLDivElement | null>(null);
-    const positionRef = useRef({ x: 987, y: 143 })
+    const positionRef = useRef({ x: 254, y: 0 })
     const offsetRef = useRef({ x: 0, y: 0 });
     const draggingRef = useRef(false);
     const [width, setWidth] = useState<string>("0");
@@ -114,12 +114,38 @@ export default function ChatInterface() {
     }
 
     const onClickWhatsappIcon = () => {
-        setWidth("1000px");
+        setWidth("830px");
         setHeight("1000px");
     }
 
+    const isResizing = useRef(false);
+
+    const handleMouseDownCard = (e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        isResizing.current = true;
+
+        const startX = e.clientX;
+        const startsWith = cardRef.current?.offsetWidth || 0;
+
+        const handleMouseMove = (e: any) => {
+            console.log("mousemove: ", isResizing.current);
+            console.log("document: ", document)
+            if (!isResizing.current) return;
+            const newWidth = startsWith + (e.clientX - startX);
+            setWidth(`${Math.max(newWidth, 100)}px`);
+        }
+        const handleMouseUp = () => {
+            isResizing.current = false;
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+        }
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+    }
+
     return <SnackbarProvider maxSnack={3}>
-        <Box sx={{}}>
+        <Box sx={{ border: '1px solid red' }}>
             <Card
                 ref={cardRef}
                 onDragStart={(e) => e.preventDefault()}
@@ -138,8 +164,28 @@ export default function ChatInterface() {
                     // overflow: 'hidden',
                     zIndex: 1000,
                     boxShadow: '0px 1px 24px 5px rgba(34, 60, 80, 0.2)',
+                    boxSizing: 'border-box'
                     // border: '1px solid red'
-                }}>
+                }}
+            >
+                {/* <div onMouseDown={handleMouseDownCard} style={{
+                    border: '1px solid red',
+                    position: 'absolute',
+                    top: 0, bottom: 0,
+                    left: '0',
+                    zIndex: 100,
+                    width: '10px',
+                    cursor: 'ew-resize'
+                }}></div>
+                <div onMouseDown={handleMouseDownCard} style={{
+                    border: '1px solid red',
+                    position: 'absolute',
+                    top: 0, bottom: 0,
+                    right: '0',
+                    width: '10px',
+                    zIndex: 100,
+                    cursor: 'ew-resize'
+                }}></div> */}
                 <Box
                     onMouseDown={handleMouseDown}
                     sx={{
@@ -157,7 +203,7 @@ export default function ChatInterface() {
                     </Stack>
                 </Box>
                 <Grid container>
-                    <Grid {...{ item: true }} sx={{ minWidth: "350px", maxWidth: "350px" }}>
+                    <Grid {...{ item: true }} sx={{ minWidth: "330px", maxWidth: "330px" }}>
                         <Contacts variant={ChatBoxVariant.hd} />
                     </Grid>
                     <Grid {...{ item: true }} flexGrow={1} sx={{ background: '#fff', width: '300px', height: '944px', overflow: 'hidden' }}>

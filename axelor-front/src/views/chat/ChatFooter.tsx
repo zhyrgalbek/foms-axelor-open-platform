@@ -422,11 +422,11 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
   }, [value]);
 
   return (
-    <Card sx={{ py: 1, bgcolor: "#F0F2F5", height: '90px' }}>
+    <Card sx={{ py: 1, bgcolor: "#F0F2F5", boxShadow: 'none' }}>
       {selectedFiles.length > 0 && (
         <ShowSelectDocument
           selectFiles={selectedFiles}
-          alt="Hello world"
+          alt=""
           setSelectedFiles={setSelectedFiles}
           onChange={onChangeFile}
           caption={caption as string}
@@ -574,7 +574,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
                 </List>
               </Paper>
             )}
-            <Stack direction="row" alignItems="center" sx={{ position: "relative" }}>
+            <Stack direction="row" alignItems="flex-end" sx={{ position: "relative" }}>
               {!complete && messageLoading && (
                 <Skeleton animation="wave" variant="rounded" width={30} height={30} sx={{ marginRight: "10px" }} />
               )}
@@ -632,6 +632,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
                     overflowX: "hidden",
                     overflowY: "auto",
                     maxHeight: "100px",
+                    marginBottom: '-5px',
                     "&::-webkit-scrollbar": {
                       width: "0.3em",
                     },

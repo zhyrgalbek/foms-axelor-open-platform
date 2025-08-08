@@ -144,9 +144,9 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
 
   useEffect(() => {
     if (chat?.id === contact?.id) {
-      setBgColor(grey[300]);
+      setBgColor(grey[700]);
     } else {
-      setBgColor("#fff");
+      setBgColor("transparent");
     }
   }, [chat]);
 
@@ -211,10 +211,25 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
         sx={{
           borderBottom: "1px solid #9e9e9e3d",
           gap: "10px",
-          backgroundColor: bgColor,
+          position: 'relative',
+          "::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundSize: "130px 130px",
+            backgroundPosition: "top left",
+            backgroundRepeat: "repeat",
+            backgroundColor: bgColor,
+            opacity: 0.2,
+            zIndex: 100,
+          },
         }}
         onClick={onClickListItem}
         onContextMenu={onContextMenu}
+
       >
         <Avatar sx={{ width: "35px", height: "35px", fontSize: 14 }} alt="Profile Picture">
           {getContactName(contact)}
@@ -269,8 +284,9 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
                   justifyContent="flex-end"
                   sx={{ marginRight: "0px", marginTop: "7px" }}
                   alignItems="center"
+
                 >
-                  <Badge badgeContent={contact.unreadMessageCount} color="primary"></Badge>
+                  <Badge badgeContent={contact.unreadMessageCount} color="primary" sx={{transform: 'scale(1.3)'}}></Badge>
                 </Stack>
               </Box>
               <Box component="span" fontWeight={400} fontSize={14} color="#8E8E93">

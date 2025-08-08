@@ -88,7 +88,7 @@ export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
   }, [selectedContactGroup]);
 
   return (
-    <ContactBox sx={{ pb: 7 }}>
+    <ContactBox sx={{ pb: 7, borderRadius: 'none' }}>
       <CssBaseline />
       <Stack direction="column">
         <Stack
@@ -126,26 +126,26 @@ export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
         </Box>
       </Stack>
       <Box
-        sx={{
-          position: "relative",
-          height: "775px",
-          overflow: "auto",
-          overflowY: "auto",
-          "&::-webkit-scrollbar": {
-            width: "8px",
-          },
-          "&::-webkit-scrollbar-track": {
-            backgroundColor: "#f1f1f1",
-            borderRadius: "10px",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#888",
-            borderRadius: "10px",
-          },
-          "&::-webkit-scrollbar-thumb:hover": {
-            backgroundColor: "#555",
-          },
-        }}
+        // sx={{
+        //   position: "relative",
+        //   height: "775px",
+        //   overflow: "auto",
+        //   overflowY: "auto",
+        //   "&::-webkit-scrollbar": {
+        //     width: "8px",
+        //   },
+        //   "&::-webkit-scrollbar-track": {
+        //     backgroundColor: "#f1f1f1",
+        //     borderRadius: "10px",
+        //   },
+        //   "&::-webkit-scrollbar-thumb": {
+        //     backgroundColor: "#888",
+        //     borderRadius: "10px",
+        //   },
+        //   "&::-webkit-scrollbar-thumb:hover": {
+        //     backgroundColor: "#555",
+        //   },
+        // }}
       >
         {chats[selectedContactGroup].map((contact: ClientType | ColleaguesType) => {
           return <Contact key={contact?.id} contact={contact} />;

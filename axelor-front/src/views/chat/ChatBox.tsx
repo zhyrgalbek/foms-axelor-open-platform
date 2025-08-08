@@ -91,12 +91,12 @@ export default function ChatBox({ order = false, chatId, page, variant }: ChatBo
                 )}
                 {!order && chat && (
                     <Suspense fallback={<div>Loading...</div>}>
-                        <Box>
+                        <Stack direction="column">
                             <ChatHeader order={order} page={page} variant={variant} />
                             <ChatMain order={order} />
                             <ChatFooter order={order} variant={variant} />
                             <Snackbar />
-                        </Box>
+                        </Stack>
                     </Suspense>
                 )}
             </Card>

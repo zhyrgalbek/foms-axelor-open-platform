@@ -217,7 +217,8 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
     return (
         <Box
             sx={{
-                height: '762px',
+                height: '783px',
+                flexGrow: 1,
                 background: "#f5f5f5",
                 overflow: "hidden",
                 position: "relative",
