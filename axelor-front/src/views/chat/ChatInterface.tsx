@@ -145,7 +145,7 @@ export default function ChatInterface() {
     }
 
     return <SnackbarProvider maxSnack={3}>
-        <Box sx={{ border: '1px solid red' }}>
+        <Box >
             <Card
                 ref={cardRef}
                 onDragStart={(e) => e.preventDefault()}
