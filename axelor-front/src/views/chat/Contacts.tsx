@@ -128,7 +128,7 @@ export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
       <Box
         sx={{
           position: "relative",
-          height: "82vh",
+          height: "775px",
           overflow: "auto",
           overflowY: "auto",
           "&::-webkit-scrollbar": {

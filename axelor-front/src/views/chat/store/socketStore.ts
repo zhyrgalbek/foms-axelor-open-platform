@@ -452,18 +452,17 @@ export const useSocketStore = create(
                     );
                   }
                 } else {
-                  clients.unshift(data.newClient);
+                  // clients.unshift(data.newClient);
                   setSelectedContactGroups(0);
-                  setChat(data.newClient);
-                  s.send(
-                    JSON.stringify({
-                      event: "getChatMessages",
-                      data: {
-                        chat: data.newClient,
-                        limit: 40,
-                      },
-                    })
-                  );
+                  // s.send(
+                  //   JSON.stringify({
+                  //     event: "getChatMessages",
+                  //     data: {
+                  //       chat: data.newClient,
+                  //       limit: 40,
+                  //     },
+                  //   })
+                  // );
                 }
                 setMessageLoading(false);
                 setChats([[...clients], chats[1]]);

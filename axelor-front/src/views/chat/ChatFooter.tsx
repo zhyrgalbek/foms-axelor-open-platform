@@ -157,7 +157,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
             };
           }
         }
-        
+
       }
     },
     [enqueueSnackbar, setSelectedFiles]
@@ -422,7 +422,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
   }, [value]);
 
   return (
-    <Card sx={{ py: 1, border: "none", bgcolor: "#F0F2F5" }}>
+    <Card sx={{ py: 1, bgcolor: "#F0F2F5", height: '120px' }}>
       {selectedFiles.length > 0 && (
         <ShowSelectDocument
           selectFiles={selectedFiles}
