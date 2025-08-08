@@ -217,6 +217,7 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
     return (
         <Box
             sx={{
+                height: '720px',
                 background: "#f5f5f5",
                 overflow: "hidden",
                 position: "relative",
@@ -240,7 +241,7 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
             <Stack
                 ref={container}
                 sx={{
-                    height: `calc(${height} - ${minusHeight})`,
+                    height: `100%`,
                     overflow: "auto",
                     overflowY: "auto",
                     "&::-webkit-scrollbar": {

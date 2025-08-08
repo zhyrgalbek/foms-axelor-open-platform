@@ -1,11 +1,13 @@
-import { Box, Button, Card, Grid, IconButton, Stack, Typography } from "@mui/material";
+import { Badge, Box, Button, Card, Grid, IconButton, Stack, Typography } from "@mui/material";
 import Contacts from "./Contacts";
 import ChatBox from "./ChatBox";
-import { ChatBoxVariant } from "./types/chatTypes";
+import { ChatBoxVariant, ClientType, ColleaguesType } from "./types/chatTypes";
 import { useEffect, useRef, useState } from "react";
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { SnackbarProvider } from "notistack";
 import ClearIcon from '@mui/icons-material/Clear';
+import { useChatsStore } from "./store/chatsStore";
+import { useChatStore } from "./store/chatStore";
 
 export default function ChatInterface() {
     const cardRef = useRef<HTMLDivElement | null>(null);
@@ -15,6 +17,8 @@ export default function ChatInterface() {
     const [width, setWidth] = useState<string>("0");
     const [height, setHeight] = useState<string>("0");
     const scale = 0.7;
+    const { chats } = useChatsStore(state => state);
+    const { setChat } = useChatStore(state => state);
 
     const handleMouseDown = (e: React.MouseEvent) => {
         if ((e.target as HTMLElement).closest('button')) return;
@@ -106,15 +110,16 @@ export default function ChatInterface() {
         e.stopPropagation();
         setWidth("0");
         setHeight("0");
+        setChat(null);
     }
 
     const onClickWhatsappIcon = () => {
         setWidth("1000px");
-        setHeight("1020px");
+        setHeight("1000px");
     }
 
     return <SnackbarProvider maxSnack={3}>
-        <Box sx={{ border: '1px solid red' }}>
+        <Box sx={{}}>
             <Card
                 ref={cardRef}
                 onDragStart={(e) => e.preventDefault()}
@@ -150,7 +155,7 @@ export default function ChatInterface() {
                         </IconButton>
                     </Stack>
                 </Box>
-                <Grid container>
+                <Grid container >
                     <Grid {...{ item: true }} sx={{ minWidth: "350px", maxWidth: "350px" }}>
                         <Contacts variant={ChatBoxVariant.hd} />
                     </Grid>
@@ -161,8 +166,8 @@ export default function ChatInterface() {
             </Card >
             <IconButton sx={{
                 position: 'fixed',
-                right: 80,
-                top: 3,
+                right: '80px',
+                top: '10px',
                 background: '#28A219',
                 ":focus": {
                     background: '#28A219'
@@ -174,8 +179,28 @@ export default function ChatInterface() {
                 boxShadow: '0px 1px 24px 5px rgba(34, 60, 80, 0.2)'
             }}
                 onClick={onClickWhatsappIcon}>
-                <WhatsAppIcon sx={{ width: '30px', height: '30px', color: '#fff' }} />
+                <Box sx={{ flexGrow: 1, position: 'absolute', top: 0, left: '30px' }}>
+                    <Stack
+                        direction="row"
+                        justifyContent="flex-end"
+                        sx={{ marginRight: "0px", marginTop: "7px" }}
+                        alignItems="center"
+                    >
+                        <Badge badgeContent={getAllCount(0, chats)} color="primary"></Badge>
+                    </Stack>
+                </Box>
+                <WhatsAppIcon sx={{ width: '20px', height: '20px', color: '#fff' }} />
             </IconButton>
         </Box>
     </SnackbarProvider>
+}
+
+function getAllCount(index: number, chats: [ClientType[], ColleaguesType[]]) {
+    let sum = 0;
+    chats[index].forEach((el) => {
+        if (el.unreadMessageCount) {
+            sum += +el.unreadMessageCount;
+        }
+    });
+    return sum;
 }

@@ -8,6 +8,7 @@ import { useNotificationStore } from "./store/notificationStore";
 import { ChatBoxVariant } from "./types/chatTypes";
 import MessageTone from "@/assets/music/new_message_tone.mp3";
 import MessageToneOdnoklassniki from "@/assets/music/odnoklassniki_-_zvuk_soobscheniy.mp3";
+import { Box } from "@mui/system";
 const ChatHeader = React.lazy(() => import("./ChatHeader"));
 const ChatFooter = React.lazy(() => import("./ChatFooter"));
 const ChatMain = React.lazy(() => import("./ChatMain"));
@@ -89,14 +90,14 @@ export default function ChatBox({ order = false, chatId, page, variant }: ChatBo
                     </Stack>
                 )}
                 {!order && chat && (
-                    <Stack direction="column" flexWrap="nowrap">
-                        <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Box>
                             <ChatHeader order={order} page={page} variant={variant} />
                             <ChatMain order={order} />
                             <ChatFooter order={order} variant={variant} />
                             <Snackbar />
-                        </Suspense>
-                    </Stack>
+                        </Box>
+                    </Suspense>
                 )}
             </Card>
         </Grid>
