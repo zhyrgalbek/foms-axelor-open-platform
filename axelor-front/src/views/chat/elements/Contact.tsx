@@ -278,51 +278,6 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
                   <Time timestamp={contact.lastMessage.timestamp} formatStr="HH:mm" />
                 )}
               </Box>
-              {/* {"appeal" in contact && contact.appeal && (
-                <Stack direction="row" alignItems="center" justifyContent="flex-end" spacing={1}>
-                  <Box>
-                    <IconButton
-                      style={{ zIndex: 1301 }}
-                      onMouseEnter={onMouseEnterTransferIcon}
-                      onMouseLeave={handleCloseTransferIcon}
-                    >
-                      <Badge
-                        badgeContent={
-                          <Typography color="#3f51b5" fontSize={11}>
-                            {members.length}
-                          </Typography>
-                        }
-                      >
-                        <SupportAgentIcon sx={{ color: "#3f51b5" }} />
-                      </Badge>
-                    </IconButton>
-                    <Popover
-                      id={idTransfer}
-                      open={openTransfer}
-                      anchorEl={anchorElTransfer}
-                      onClose={handleClose}
-                      anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "right",
-                      }}
-                    >
-                      {members.length > 0 &&
-                        members.map((el) => {
-                          return (
-                            <Box key={el.id} sx={{ position: "relative", zIndex: 13500 }}>
-                              <Typography sx={{ p: 1, fontSize: 11 }}>{el.fullName}</Typography>
-                            </Box>
-                          );
-                        })}
-                      {members.length === 0 && (
-                        <Box sx={{ position: "relative", zIndex: 13500 }}>
-                          <Typography sx={{ p: 1, fontSize: 11 }}>no data</Typography>
-                        </Box>
-                      )}
-                    </Popover>
-                  </Box>
-                </Stack>
-              )} */}
             </Stack>
           }
           secondary={
@@ -345,35 +300,6 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
           }
         />
       </ListItemButton>
-      {/* <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <MenuItem onClick={handleClose}>
-          <ContentPasteGoIcon sx={{ marginRight: "10px", color: grey[500] }} /> Перейти в карточку
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <DonutLargeIcon sx={{ marginRight: "10px", color: grey[500] }} />
-          Завершить
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <DeleteIcon sx={{ marginRight: "10px", color: grey[500] }} />
-          Удалить
-        </MenuItem>
-      </Menu> */}
     </>
   );
 });

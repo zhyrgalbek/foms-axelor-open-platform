@@ -422,7 +422,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
   }, [value]);
 
   return (
-    <Card sx={{ py: 1, bgcolor: "#F0F2F5", height: '120px' }}>
+    <Card sx={{ py: 1, bgcolor: "#F0F2F5", height: '90px' }}>
       {selectedFiles.length > 0 && (
         <ShowSelectDocument
           selectFiles={selectedFiles}

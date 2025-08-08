@@ -135,9 +135,10 @@ export default function ChatInterface() {
                     width: width,
                     // transition: '500ms ease width, 500ms ease height',
                     transform: 'scale(0.8)',
-                    overflow: 'hidden',
+                    // overflow: 'hidden',
                     zIndex: 1000,
                     boxShadow: '0px 1px 24px 5px rgba(34, 60, 80, 0.2)',
+                    // border: '1px solid red'
                 }}>
                 <Box
                     onMouseDown={handleMouseDown}
@@ -155,11 +156,11 @@ export default function ChatInterface() {
                         </IconButton>
                     </Stack>
                 </Box>
-                <Grid container >
+                <Grid container>
                     <Grid {...{ item: true }} sx={{ minWidth: "350px", maxWidth: "350px" }}>
                         <Contacts variant={ChatBoxVariant.hd} />
                     </Grid>
-                    <Grid {...{ item: true }} flexGrow={1} sx={{ background: '#fff', width: '300px', height: '600px' }}>
+                    <Grid {...{ item: true }} flexGrow={1} sx={{ background: '#fff', width: '300px', height: '944px', overflow: 'hidden' }}>
                         <ChatBox order={false} chatId={null} page="/chat" variant={ChatBoxVariant.hd} />
                     </Grid>
                 </Grid>

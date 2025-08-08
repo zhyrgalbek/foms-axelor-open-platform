@@ -77,7 +77,7 @@ export default function ChatBox({ order = false, chatId, page, variant }: ChatBo
     }, []);
 
     return (
-        <Grid {...{ item: true }} flexGrow={1} >
+        <Grid {...{ item: true }} >
             <Card sx={{ border: 'none' }}>
                 {order && (
                     <Stack direction="column" flexWrap="nowrap">

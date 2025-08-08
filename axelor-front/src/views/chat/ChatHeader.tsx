@@ -112,7 +112,7 @@ const ChatHeader = ({ order, page, variant, ...props }: ChatHeaderPropsType) => 
     }, [chat]);
 
     return (
-        <Card sx={{ py: order ? 0.5 : 1.5, px: 1, bgcolor: "#F0F2F5", height: '120px' }}>
+        <Card sx={{ py: order ? 0.5 : 1.5, px: 1, bgcolor: "#F0F2F5", height: '90px' }}>
             <Grid container alignItems="center" spacing={1}>
                 <Grid {...{ item: true }}>
                     <Stack direction="row" spacing={1} alignItems="center">

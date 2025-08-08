@@ -24,7 +24,7 @@ import { ChatBoxVariant, ClientType, ColleaguesType } from "./types/chatTypes";
 const ContactBox = styled(Box)({
   boxShadow: theme.shadows[2],
   borderRadius: theme.shape.borderRadius,
-  height: "100vh",
+  height: "100%",
 });
 
 
