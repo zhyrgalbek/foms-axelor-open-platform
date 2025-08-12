@@ -164,7 +164,7 @@ function ShowSelectDocument({
                 display: "flex",
                 flexDirection: "column",
                 position: "absolute",
-                top: '135px',
+                top: '87px',
                 left: 0,
                 right: 0,
                 bottom: 0,

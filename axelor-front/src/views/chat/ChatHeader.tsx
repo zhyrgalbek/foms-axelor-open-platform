@@ -118,7 +118,7 @@ const ChatHeader = ({ order, page, variant, setTransition, ...props }: ChatHeade
     }
 
     return (
-        <Card sx={{ py: order ? 0.5 : 1.5, px: 1, bgcolor: "#F0F2F5" }}>
+        <Card sx={{ py: 1.5, px: 1, bgcolor: "#F0F2F5", position: 'absolute', top: 0, left: 0, right: 0, flexFlow: 1 }}>
             <Grid container alignItems="center" spacing={1}>
                 <Grid {...{ item: true }}>
 

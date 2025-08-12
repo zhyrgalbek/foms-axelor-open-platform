@@ -2,6 +2,9 @@
 import { create } from "zustand";
 import { fileTypeFromBuffer } from "file-type";
 const CONTEXT = import.meta.env.VITE_PROXY_CONTEXT;
+const LOGIN = import.meta.env.VITE_PROXY_LOGIN;
+const PASSWORD = import.meta.env.VITE_PROXY_PASSWORD;
+
 interface FileType {
   fileName: string;
   id: number;
@@ -64,6 +67,24 @@ async function detectMimeType(blob: Blob) {
   return "application/octet-stream";
 }
 
+export function getCookie(name: string): string | null {
+  let cookieName = encodeURIComponent(name) + "=",
+    cookieStart = document.cookie.indexOf(cookieName),
+    cookieValue = null,
+    cookieEnd;
+
+  if (cookieStart > -1) {
+    cookieEnd = document.cookie.indexOf(";", cookieStart);
+    if (cookieEnd === -1) {
+      cookieEnd = document.cookie.length;
+    }
+    cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookieEnd));
+  }
+
+  return cookieValue;
+}
+
+let csrfToken: string | null = null;
 export const useMessageTemplateStore = create<messageTemplateType>()((set, get) => ({
   template: [],
   files: [],
@@ -96,6 +117,10 @@ export const useMessageTemplateStore = create<messageTemplateType>()((set, get) 
     try {
       set({ templateLoading: true });
 
+      if (!csrfToken) {
+        csrfToken = getCookie("CSRF-TOKEN");
+      }
+
       let body: {
         offset: number;
         limit: number;
@@ -123,6 +148,11 @@ export const useMessageTemplateStore = create<messageTemplateType>()((set, get) 
 
       let response = await fetch(`${CONTEXT}/ws/rest/com.axelor.message.db.Template/search`, {
         method: "POST",
+        headers: {
+          "Authorization": `Basic ${btoa(LOGIN + ":" + PASSWORD)}`,
+          "Content-Type": "application/json",
+          "X-Csrf-Token": csrfToken || ""
+        },
         body: JSON.stringify(body),
       });
 
@@ -141,7 +171,15 @@ export const useMessageTemplateStore = create<messageTemplateType>()((set, get) 
   postTemplateSearch: async ({ name }) => {
     try {
       set({ templateLoading: true });
+      if (!csrfToken) {
+        csrfToken = getCookie("CSRF-TOKEN");
+      }
       let response = await fetch(`${CONTEXT}/ws/rest/com.axelor.message.db.Template/search`, {
+        headers: {
+          "Authorization": `Basic ${btoa(LOGIN + ":" + PASSWORD)}`,
+          "Content-Type": "application/json",
+          "X-Csrf-Token": csrfToken || ""
+        },
         method: "POST",
         body: JSON.stringify({
           offset: 0,
@@ -171,8 +209,16 @@ export const useMessageTemplateStore = create<messageTemplateType>()((set, get) 
   postTemplateFiles: async ({ templateId }) => {
     try {
       set({ templateLoading: true });
+      if (!csrfToken) {
+        csrfToken = getCookie("CSRF-TOKEN");
+      }
       let response = await fetch(`${CONTEXT}/ws/rest/com.axelor.dms.db.DMSFile/search`, {
         method: "POST",
+        headers: {
+          "Authorization": `Basic ${btoa(LOGIN + ":" + PASSWORD)}`,
+          "Content-Type": "application/json",
+          "X-Csrf-Token": csrfToken || ""
+        },
         body: JSON.stringify({
           offset: 0,
           fields: ["name", "content", "templateFile", "isSystem", "fileName"],
@@ -199,11 +245,16 @@ export const useMessageTemplateStore = create<messageTemplateType>()((set, get) 
   getdownloadFile: async ({ fileId, fileName, fileType }) => {
     try {
       set({ templateLoading: true });
+      if (!csrfToken) {
+        csrfToken = getCookie("CSRF-TOKEN");
+      }
       let response = await fetch(`${CONTEXT}/ws/dms/download/${fileId}`, {
         method: "GET",
         headers: {
           Accept: "*/*",
+          "Authorization": `Basic ${btoa(LOGIN + ":" + PASSWORD)}`,
           "Content-Type": "multipart/form-data",
+          "X-Csrf-Token": csrfToken || ""
         },
       });
       if (response.ok) {

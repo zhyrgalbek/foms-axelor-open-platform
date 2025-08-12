@@ -55,21 +55,20 @@ export const Textarea = styled(TextareaAutosize)(
     color: #1C2025;
     background: #fff;
     border: 1px solid #C7D0DD;
+    overflowY: auto;
+    maxHeight: 100px;
     resize: none;
     border: none;
     &:hover {
       border-color: #3399FF;
     }
-
     &:focus {
       outline: 0;
       border-color: #3399FF;
     }
-
     &:focus-visible {
       outline: 0;
     }
-
   `
 );
 
@@ -422,7 +421,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
   }, [value]);
 
   return (
-    <Card sx={{ py: 1, bgcolor: "#F0F2F5", boxShadow: 'none' }}>
+    <Card sx={{ py: 1, bgcolor: "#F0F2F5", boxShadow: 'none', flexGrow: 1 }}>
       {selectedFiles.length > 0 && (
         <ShowSelectDocument
           selectFiles={selectedFiles}
@@ -444,7 +443,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
           Длина собщений не должна превышать 4096 символов!
         </Alert>
       </Snackbar>
-      <Box p={1}>
+      <Box p={1} >
         {sendMessageLoading && (
           <Stack
             sx={{
@@ -482,40 +481,6 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
               );
             })}
           </Box>
-        )}
-        {complete && (
-          <Stack direction="column" alignItems="flex-start" sx={{ position: "relative" }}>
-            <Box>
-              {!messageLoading && (
-                <Typography color="error">Вы завершили этот чат и не можете написать на этого клиента!</Typography>
-              )}
-              {messageLoading && <Skeleton animation="wave" variant="rounded" width={470} />}
-            </Box>
-            {(chat?.appeal?.status === 3 || chat?.appeal?.status === 1 || chat?.appeal?.status === 2) && (
-              <Box>
-                {!messageLoading && (
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    startIcon={<TextsmsIcon fontSize="small" />}
-                    sx={{
-                      whiteSpace: "nowrap",
-                      minWidth: "auto",
-                    }}
-                    onClick={onClickBeginChat}
-                  >
-                    <Typography fontSize={12} fontWeight={500}>
-                      Начать чат
-                    </Typography>
-                    {completedLoading && <CircularProgress size={18} sx={{ marginLeft: "10px" }} />}
-                  </Button>
-                )}
-                {messageLoading && (
-                  <Skeleton animation="wave" variant="rounded" width={120} sx={{ marginTop: "10px" }} />
-                )}
-              </Box>
-            )}
-          </Stack>
         )}
         {!complete && (
           <>
@@ -574,7 +539,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
                 </List>
               </Paper>
             )}
-            <Stack direction="row" alignItems="flex-end" sx={{ position: "relative" }}>
+            <Stack direction="row" alignItems="center" sx={{ position: "relative" }}>
               {!complete && messageLoading && (
                 <Skeleton animation="wave" variant="rounded" width={30} height={30} sx={{ marginRight: "10px" }} />
               )}
@@ -629,10 +594,8 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
                     alignItems: "center",
                     background: "#fff",
                     borderRadius: "3px",
-                    overflowX: "hidden",
-                    overflowY: "auto",
-                    maxHeight: "100px",
-                    marginBottom: '-5px',
+                    // overflow: 'auto',
+                    // maxHeight: "100px",
                     "&::-webkit-scrollbar": {
                       width: "0.3em",
                     },
@@ -647,6 +610,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
                     value={value}
                     onPaste={handlePaste}
                     onChange={handleInputChange}
+                    maxRows={4}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" && !e.shiftKey) {
                         e.preventDefault();

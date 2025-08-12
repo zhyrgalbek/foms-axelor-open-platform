@@ -232,7 +232,9 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
                 background: "#f5f5f5",
                 overflow: "hidden",
                 position: "relative",
+                marginTop: '89px',
                 backgroundColor: "rgba(0,0,0,0.15)",
+                // paddingTop: '100px',
                 "::before": {
                     content: '""',
                     position: "absolute",

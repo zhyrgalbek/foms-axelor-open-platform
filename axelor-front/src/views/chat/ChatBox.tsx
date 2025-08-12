@@ -94,7 +94,7 @@ export default function ChatBox({ order = false, chatId, page, variant, setTrans
                 {!order && chat && (
                     <Suspense fallback={<div>Loading...</div>}>
                         {
-                            transition === "chat" && <Stack direction="column">
+                            transition === "chat" && <Stack direction="column" sx={{ position: 'relative', height: '760px' }}>
                                 <ChatHeader order={order} page={page} variant={variant} setTransition={setTransition} />
                                 <ChatMain order={order} />
                                 <ChatFooter order={order} variant={variant} />

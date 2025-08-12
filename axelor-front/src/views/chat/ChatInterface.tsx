@@ -144,13 +144,14 @@ export default function ChatInterface() {
                     sx={{
                         cursor: 'move',
                         backgroundColor: '#f5f5f5',
-                        padding: 1,
+                        padding: 1.5,
                         borderBottom: '1px solid #ddd',
                         userSelect: 'none',
-                        height: '50px'
+                        height: '50px',
+                        // border: '1px solid red'
                     }}>
-                    <Stack justifyContent="space-between" direction="row" alignItems="center">
-                        <Typography variant="h6">Whatsapp</Typography>
+                    <Stack justifyContent="space-between" direction="row" alignItems="flex-start">
+                        <Typography variant="h6" sx={{mt: 0.3}}>Whatsapp</Typography>
                         <IconButton onClick={onClearIcon} >
                             <ClearIcon />
                         </IconButton>
@@ -168,7 +169,7 @@ export default function ChatInterface() {
                     </Box>
                     <Box sx={{
                         background: '#fff',
-                        height: transition === "contact" ? '0' : "754px",
+                        height: transition === "contact" ? '0' : "760px",
                         overflow: 'hidden',
                         width: '100%',
                     }}>
