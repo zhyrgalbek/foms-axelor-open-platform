@@ -11,7 +11,7 @@ import { useChatStore } from "./store/chatStore";
 
 export default function ChatInterface() {
     const cardRef = useRef<HTMLDivElement | null>(null);
-    const positionRef = useRef({ x: 254, y: 0 })
+    const positionRef = useRef({ x: 1000, y: 0 })
     const offsetRef = useRef({ x: 0, y: 0 });
     const draggingRef = useRef(false);
     const [width, setWidth] = useState<string>("0");
@@ -19,6 +19,7 @@ export default function ChatInterface() {
     const scale = 0.7;
     const { chats } = useChatsStore(state => state);
     const { setChat } = useChatStore(state => state);
+    const [transition, setTransition] = useState<string>("contact");
 
     const handleMouseDown = (e: React.MouseEvent) => {
         if ((e.target as HTMLElement).closest('button')) return;
@@ -39,15 +40,15 @@ export default function ChatInterface() {
     const handleMouseMove = (e: MouseEvent) => {
         e.preventDefault();
         if (!draggingRef.current || !cardRef.current) return;
-        const cardWidth = cardRef.current.offsetWidth - 120;
-        const cardHeight = cardRef.current.offsetHeight - 120;
+        const cardWidth = cardRef.current.offsetWidth - 40;
+        const cardHeight = cardRef.current.offsetHeight - 75;
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
-        let newX = e.clientX - offsetRef.current.x - 102;
-        let newY = e.clientY - offsetRef.current.y - 102;
+        let newX = e.clientX - offsetRef.current.x - 78;
+        let newY = e.clientY - offsetRef.current.y - 78;
 
-        newX = Math.max(-148, Math.min(screenWidth - cardWidth, newX));
-        newY = Math.max(-135, Math.min(screenHeight - cardHeight, newY));
+        newX = Math.max(-40, Math.min(screenWidth - cardWidth, newX));
+        newY = Math.max(-75, Math.min(screenHeight - cardHeight, newY));
 
         positionRef.current = { x: newX, y: newY };
         cardRef.current.style.left = `${newX}px`;
@@ -111,37 +112,12 @@ export default function ChatInterface() {
         setWidth("0");
         setHeight("0");
         setChat(null);
+        setTransition("contact")
     }
 
     const onClickWhatsappIcon = () => {
-        setWidth("830px");
-        setHeight("1000px");
-    }
-
-    const isResizing = useRef(false);
-
-    const handleMouseDownCard = (e: any) => {
-        e.preventDefault();
-        e.stopPropagation();
-        isResizing.current = true;
-
-        const startX = e.clientX;
-        const startsWith = cardRef.current?.offsetWidth || 0;
-
-        const handleMouseMove = (e: any) => {
-            console.log("mousemove: ", isResizing.current);
-            console.log("document: ", document)
-            if (!isResizing.current) return;
-            const newWidth = startsWith + (e.clientX - startX);
-            setWidth(`${Math.max(newWidth, 100)}px`);
-        }
-        const handleMouseUp = () => {
-            isResizing.current = false;
-            document.removeEventListener("mousemove", handleMouseMove);
-            document.removeEventListener("mouseup", handleMouseUp);
-        }
-        document.addEventListener("mousemove", handleMouseMove);
-        document.addEventListener("mouseup", handleMouseUp);
+        setWidth("480px");
+        setHeight("800px");
     }
 
     return <SnackbarProvider maxSnack={3}>
@@ -154,38 +130,15 @@ export default function ChatInterface() {
                     position: 'fixed',
                     left: `${positionRef.current.x}px`,
                     top: `${positionRef.current.y}px`,
-                    // left: "956px !important",
-                    // top: "29px !important",
                     background: '#fff',
                     height: height,
                     width: width,
-                    // transition: '500ms ease width, 500ms ease height',
                     transform: 'scale(0.8)',
-                    // overflow: 'hidden',
                     zIndex: 1000,
                     boxShadow: '0px 1px 24px 5px rgba(34, 60, 80, 0.2)',
                     boxSizing: 'border-box'
-                    // border: '1px solid red'
                 }}
             >
-                {/* <div onMouseDown={handleMouseDownCard} style={{
-                    border: '1px solid red',
-                    position: 'absolute',
-                    top: 0, bottom: 0,
-                    left: '0',
-                    zIndex: 100,
-                    width: '10px',
-                    cursor: 'ew-resize'
-                }}></div>
-                <div onMouseDown={handleMouseDownCard} style={{
-                    border: '1px solid red',
-                    position: 'absolute',
-                    top: 0, bottom: 0,
-                    right: '0',
-                    width: '10px',
-                    zIndex: 100,
-                    cursor: 'ew-resize'
-                }}></div> */}
                 <Box
                     onMouseDown={handleMouseDown}
                     sx={{
@@ -194,22 +147,34 @@ export default function ChatInterface() {
                         padding: 1,
                         borderBottom: '1px solid #ddd',
                         userSelect: 'none',
+                        height: '50px'
                     }}>
-                    <Stack justifyContent="space-between" direction="row">
+                    <Stack justifyContent="space-between" direction="row" alignItems="center">
                         <Typography variant="h6">Whatsapp</Typography>
                         <IconButton onClick={onClearIcon} >
                             <ClearIcon />
                         </IconButton>
                     </Stack>
                 </Box>
-                <Grid container>
-                    <Grid {...{ item: true }} sx={{ minWidth: "330px", maxWidth: "330px" }}>
-                        <Contacts variant={ChatBoxVariant.hd} />
-                    </Grid>
-                    <Grid {...{ item: true }} flexGrow={1} sx={{ background: '#fff', width: '300px', height: '944px', overflow: 'hidden' }}>
-                        <ChatBox order={false} chatId={null} page="/chat" variant={ChatBoxVariant.hd} />
-                    </Grid>
-                </Grid>
+                <Box >
+                    <Box
+                        sx={{
+                            width: '100%',
+                            height: '100%',
+                            display: transition === "contact" ? "block" : 'none'
+                        }}
+                    >
+                        <Contacts variant={ChatBoxVariant.hd} setTransition={setTransition} />
+                    </Box>
+                    <Box sx={{
+                        background: '#fff',
+                        height: transition === "contact" ? '0' : "754px",
+                        overflow: 'hidden',
+                        width: '100%',
+                    }}>
+                        <ChatBox order={false} chatId={null} page="/chat" variant={ChatBoxVariant.hd} setTransition={setTransition} transition={transition} />
+                    </Box>
+                </Box>
             </Card >
             <IconButton sx={{
                 position: 'fixed',

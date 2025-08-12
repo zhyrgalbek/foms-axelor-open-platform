@@ -18,9 +18,11 @@ interface ChatBoxPropsType {
     chatId: number | null;
     page: string;
     variant: ChatBoxVariant;
+    setTransition: (value: string) => void,
+    transition: string
 }
 
-export default function ChatBox({ order = false, chatId, page, variant }: ChatBoxPropsType) {
+export default function ChatBox({ order = false, chatId, page, variant, setTransition, transition }: ChatBoxPropsType) {
     const { socket, startSocket, closeSocket, sendEvent, _hasRehydrated } = useSocketStore((state) => state);
     const { setNewMessageTone, setNewMessageToneCollega } = useNotificationStore((state) => state);
     const { currentUserId } = useChatUserStore((state) => state);
@@ -82,7 +84,7 @@ export default function ChatBox({ order = false, chatId, page, variant }: ChatBo
                 {order && (
                     <Stack direction="column" flexWrap="nowrap">
                         <Suspense fallback={<div>Loading...</div>}>
-                            <ChatHeader order={order} page={page} variant={variant} />
+                            <ChatHeader order={order} page={page} variant={variant} setTransition={setTransition} />
                             <ChatMain order={order} />
                             <ChatFooter order={order} variant={variant} />
                             <Snackbar />
@@ -91,12 +93,14 @@ export default function ChatBox({ order = false, chatId, page, variant }: ChatBo
                 )}
                 {!order && chat && (
                     <Suspense fallback={<div>Loading...</div>}>
-                        <Stack direction="column">
-                            <ChatHeader order={order} page={page} variant={variant} />
-                            <ChatMain order={order} />
-                            <ChatFooter order={order} variant={variant} />
-                            <Snackbar />
-                        </Stack>
+                        {
+                            transition === "chat" && <Stack direction="column">
+                                <ChatHeader order={order} page={page} variant={variant} setTransition={setTransition} />
+                                <ChatMain order={order} />
+                                <ChatFooter order={order} variant={variant} />
+                                <Snackbar />
+                            </Stack>
+                        }
                     </Suspense>
                 )}
             </Card>

@@ -8,6 +8,7 @@ import {
     Typography,
     Card,
     Skeleton,
+    IconButton,
 } from "@mui/material";
 import { useSocketStore } from "./store/socketStore";
 import { getChatClientName } from "./helpers/helpers";
@@ -18,12 +19,13 @@ import { useChatMessage } from "./store/message";
 import { useChatsStore } from "./store/chatsStore";
 import { useChatStore } from "./store/chatStore";
 import { ChatBoxVariant, ChatType } from "./types/chatTypes";
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 type ChatHeaderPropsType = {
     order: boolean;
     page: string;
     variant: ChatBoxVariant;
+    setTransition: (value: string) => void
 };
 
 export type ContactInfoType = {
@@ -34,7 +36,7 @@ export type ContactInfoType = {
     commentary: string;
 };
 
-const ChatHeader = ({ order, page, variant, ...props }: ChatHeaderPropsType) => {
+const ChatHeader = ({ order, page, variant, setTransition, ...props }: ChatHeaderPropsType) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const { sendEvent } = useSocketStore((state) => state);
     const { chat } = useChatStore((state) => state);
@@ -111,10 +113,15 @@ const ChatHeader = ({ order, page, variant, ...props }: ChatHeaderPropsType) => 
         }
     }, [chat]);
 
+    const onClickBack = () => {
+        setTransition("contact")
+    }
+
     return (
         <Card sx={{ py: order ? 0.5 : 1.5, px: 1, bgcolor: "#F0F2F5" }}>
             <Grid container alignItems="center" spacing={1}>
                 <Grid {...{ item: true }}>
+
                     <Stack direction="row" spacing={1} alignItems="center">
                         {!order && messageLoading && <Skeleton variant="circular" sx={{ width: "30px", height: "30px" }} />}
                         {!order && messageLoading && (
@@ -131,6 +138,9 @@ const ChatHeader = ({ order, page, variant, ...props }: ChatHeaderPropsType) => 
                         )}
                     </Stack>
                     <Stack direction="row" spacing={1} alignItems="center">
+                        <IconButton onClick={onClickBack}>
+                            <ArrowBackIcon />
+                        </IconButton>
                         {!order && !messageLoading && (
                             <Avatar sx={{ width: "30px", height: "30px", fontSize: 13 }}>{getChatClientName(chat)}</Avatar>
                         )}

@@ -87,8 +87,6 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
     const [limit, setLimit] = useState<number>(40);
     const [offset, setOffset] = useState(0);
     const backgroundImage = ChatMainBackground;
-    let height = order ? "530px" : "100vh";
-    let minusHeight = chat?.appeal ? "166px" : "130px";
     const loadMoreRef = useRef(null);
     const [showButton, setShowButton] = useState<boolean>(false);
     const [isAtBottom, setIsAtBottom] = useState<boolean>(true);
@@ -106,10 +104,11 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
                     setTotal(false);
                 }
                 setCurrentChatMessages(chatMessages.messages);
-            }
-            timeoute = setTimeout(() => {
                 setShowMessageSendRef(true);
-            }, 550);
+            }
+            // timeoute = setTimeout(() => {
+            //     setShowMessageSendRef(true);
+            // }, 550);
         }
         return () => {
             if (timeoute) {
@@ -117,6 +116,24 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
             }
         };
     }, [messages, chat]);
+
+    useEffect(() => {
+        let t: any = null;
+        if (chat && chat?.unreadMessageCount > 0) {
+            t = setTimeout(() => {
+                sendEvent({
+                    event: "isReadMessages",
+                    data: {
+                        chat: chat,
+                        user: currentUserId,
+                    },
+                });
+            }, 2000);
+        }
+        return () => {
+            clearTimeout(t);
+        }
+    }, [messages]);
 
     useEffect(() => {
         const timeoute = setTimeout(() => {
@@ -160,17 +177,10 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
+            console.log("isAtBottom: ", isAtBottom)
             if (isAtBottom) {
                 messageEndRef.current?.scrollIntoView({ behavior: scrollIntoViewBehavior });
-                if (chat && chat?.unreadMessageCount > 0) {
-                    sendEvent({
-                        event: "isReadMessages",
-                        data: {
-                            chat: { id: chat?.id },
-                            user: currentUserId,
-                        },
-                    });
-                }
+
             }
             if (currentChatMessages.length > 0 && scrollTop) {
                 container.current.scrollTop = container.current.scrollHeight - scrollTop;
@@ -217,7 +227,7 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
     return (
         <Box
             sx={{
-                height: '783px',
+                height: '590px',
                 flexGrow: 1,
                 background: "#f5f5f5",
                 overflow: "hidden",

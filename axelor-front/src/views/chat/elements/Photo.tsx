@@ -58,7 +58,7 @@ const Photo = memo(({ message, answer }: PhotoPropsType) => {
                     )}
                 </Stack>
                 {message.caption && (
-                    <Typography fontSize={11.5} sx={{ marginRight: "30px" }}>
+                    <Typography fontSize={16} sx={{ marginRight: "30px", paddingTop: '10px' }}>
                         {<pre style={{ textWrap: "wrap" }}>{message.caption}</pre>}
                     </Typography>
                 )}

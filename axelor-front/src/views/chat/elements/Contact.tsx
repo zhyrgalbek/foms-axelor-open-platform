@@ -26,7 +26,7 @@ import { ChatType, ClientType, ColleaguesType, CompletedUserType, MemberType, Me
 
 
 
-const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => {
+const Contact = memo(({ contact, setTransition }: { contact: ClientType | ColleaguesType, setTransition: (value: string) => void }) => {
   const { sendEvent } = useSocketStore((state) => state);
   const { currentUserId } = useChatUserStore((state) => state);
   const { chat, setChat } = useChatStore((state) => state);
@@ -69,6 +69,7 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
         limit: 40,
       },
     });
+    setTransition("chat");
   }, [setChat, sendEvent, contact]);
 
   const onContextMenu = (event: any) => {
@@ -103,7 +104,7 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
 
   useEffect(() => {
     if (contact["appeal.id"]) {
-      setFullName(`${contact["appeal.name"]} ${contact["appeal.firstName"]}`);
+      setFullName(`${contact["appeal.name"]} ${contact["appeal.firstName"] ?? ""}`);
     } else {
       setFullName(contact.fullName);
     }
@@ -284,9 +285,8 @@ const Contact = memo(({ contact }: { contact: ClientType | ColleaguesType }) => 
                   justifyContent="flex-end"
                   sx={{ marginRight: "0px", marginTop: "7px" }}
                   alignItems="center"
-
                 >
-                  <Badge badgeContent={contact.unreadMessageCount} color="primary" sx={{transform: 'scale(1.3)'}}></Badge>
+                  <Badge badgeContent={contact.unreadMessageCount} color="primary" sx={{ transform: 'scale(1.3)' }}></Badge>
                 </Stack>
               </Box>
               <Box component="span" fontWeight={400} fontSize={14} color="#8E8E93">

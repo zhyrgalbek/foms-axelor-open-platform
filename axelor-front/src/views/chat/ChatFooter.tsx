@@ -476,7 +476,7 @@ const ChatFooter = ({ order, variant, ...props }: ChatFooterPropsType) => {
           >
             {isTyping.map((userType: MemberType) => {
               return (
-                <Typography key={userType.id} sx={{ fontSize: 12 }}>
+                <Typography key={userType.id} sx={{ fontSize: 16 }}>
                   {userType.fullName} печатает ...
                 </Typography>
               );

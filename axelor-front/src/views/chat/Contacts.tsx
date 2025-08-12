@@ -28,7 +28,7 @@ const ContactBox = styled(Box)({
 });
 
 
-export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
+export default function Contacts({ variant, setTransition }: { variant: ChatBoxVariant, setTransition: (value: string) => void }) {
   const { sendEvent } = useSocketStore((state) => state);
   const { currentUserId } = useChatUserStore((state) => state);
   const { setChat } = useChatStore((state) => state);
@@ -88,7 +88,7 @@ export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
   }, [selectedContactGroup]);
 
   return (
-    <ContactBox sx={{ pb: 7, borderRadius: 'none' }}>
+    <ContactBox sx={{ pb: 0, borderRadius: 'none', boxShadow: 'none' }}>
       <CssBaseline />
       <Stack direction="column">
         <Stack
@@ -126,29 +126,29 @@ export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
         </Box>
       </Stack>
       <Box
-        // sx={{
-        //   position: "relative",
-        //   height: "775px",
-        //   overflow: "auto",
-        //   overflowY: "auto",
-        //   "&::-webkit-scrollbar": {
-        //     width: "8px",
-        //   },
-        //   "&::-webkit-scrollbar-track": {
-        //     backgroundColor: "#f1f1f1",
-        //     borderRadius: "10px",
-        //   },
-        //   "&::-webkit-scrollbar-thumb": {
-        //     backgroundColor: "#888",
-        //     borderRadius: "10px",
-        //   },
-        //   "&::-webkit-scrollbar-thumb:hover": {
-        //     backgroundColor: "#555",
-        //   },
-        // }}
+      sx={{
+        position: "relative",
+        height: "775px",
+        overflow: "auto",
+        overflowY: "auto",
+        "&::-webkit-scrollbar": {
+          width: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: "#f1f1f1",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#888",
+          borderRadius: "10px",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          backgroundColor: "#555",
+        },
+      }}
       >
         {chats[selectedContactGroup].map((contact: ClientType | ColleaguesType) => {
-          return <Contact key={contact?.id} contact={contact} />;
+          return <Contact key={contact?.id} contact={contact} setTransition={setTransition} />;
         })}
         {chats[selectedContactGroup].length === 0 && (
           <Stack direction="row" justifyContent="center" sx={{ marginTop: "20px" }}>
@@ -160,7 +160,7 @@ export default function Contacts({ variant }: { variant: ChatBoxVariant }) {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            sx={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 10000, background: "#fff" }}
+            sx={{ position: "absolute", top: '150px', left: 0, right: 0, bottom: 0, zIndex: 10000, background: "#fff" }}
           >
             <CircularProgress size={24} />
           </Stack>

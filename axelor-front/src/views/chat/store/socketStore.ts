@@ -348,7 +348,7 @@ export const useSocketStore = create(
                   let clientChat = chats[0].find((client) => client?.id === newMessage.chat.id);
                   let clients: ClientType[] = chats[0].map((client: ClientType) => {
                     if (client?.id === newMessage.chat.id && newMessage.appeal) {
-                      if (!newMessage.messageAuthor || newMessage.messageAuthor?.id !== currentUserId?.id) {
+                      if (!newMessage.messageAuthor) {
                         client.unreadMessageCount++;
                       }
                       if (client.fullName === "" || client.phoneNumber === "") {
@@ -401,7 +401,7 @@ export const useSocketStore = create(
                   setSendMessageLoading(false);
                   setChats([clients, chats[1]]);
                   setScrollIntoViewBehavior("smooth");
-                  if (newMessage.messageAuthor?.id !== currentUserId?.id) {
+                  if (!newMessage.messageAuthor) {
                     newMessageTone?.play();
                   }
                 }

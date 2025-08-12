@@ -62,6 +62,13 @@ function ShowSelectDocument({
         setCaption(null);
     }, [setSelectedFiles, setCaption]);
 
+    useEffect(() => {
+        if (sendMessageLoading) {
+            setSelectedFiles([]);
+            setCaption(null);
+        }
+    }, [sendMessageLoading]);
+
     const sendFile = useCallback(async () => {
         let selectFilesPromise = selectFiles.map(async (file, index, arr) => {
             if (index === arr.length - 1) {
@@ -157,7 +164,7 @@ function ShowSelectDocument({
                 display: "flex",
                 flexDirection: "column",
                 position: "absolute",
-                top: 0,
+                top: '135px',
                 left: 0,
                 right: 0,
                 bottom: 0,
@@ -170,16 +177,13 @@ function ShowSelectDocument({
                     <Close />
                 </IconButton>
             </Stack>
-            <Grid container flexGrow={1} flexWrap="wrap" direction="column">
-                <Grid {...{ item: true }} sx={{ height: "85vh" }} display="flex" justifyContent="center" alignItems="center">
-                    {/* <Grid item={true as true} sx={{ height: "85vh" }} display="flex" justifyContent="center" alignItems="center"> */}
-
+            <Grid container flexWrap="wrap" direction="column">
+                <Grid {...{ item: true }} sx={{ height: '568px' }} display="flex" justifyContent="center" alignItems="center">
                     <ImageList
                         variant="quilted"
                         sx={{ width: "100%", height: "100%", overflow: "auto" }}
                         cols={4}
                         rowHeight={144}
-                        gap={144}
                     >
                         {selectFiles.map((file) => {
                             return (
@@ -222,8 +226,8 @@ function ShowSelectDocument({
                         </ImageListItem>
                     </ImageList>
                 </Grid>
-                <Grid {...{ item: true }} sx={{ height: "100px", padding: 2 }}>
-                    <Stack direction="row" spacing={2} sx={{ position: "relative" }}>
+                <Grid {...{ item: true }} sx={{ height: "58px", width: "100%", padding: 0 }}>
+                    <Stack direction="row" spacing={2} sx={{ position: "relative", paddingRight: '10px' }} alignItems="center">
                         <Box>
                             <IconButton onClick={handleOpenPopup}>
                                 <SentimentSatisfiedAltIcon sx={{ color: "#3f51b5" }} />
