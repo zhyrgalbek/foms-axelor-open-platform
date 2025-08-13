@@ -452,7 +452,7 @@ export const useSocketStore = create(
                     );
                   }
                 } else {
-                  // clients.unshift(data.newClient);
+                  clients.unshift(data.newClient);
                   setSelectedContactGroups(0);
                   // s.send(
                   //   JSON.stringify({
