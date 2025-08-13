@@ -115,6 +115,8 @@ const ChatMessage = ({ message }: ChatMessagePropsType) => {
                                     fontStyle: "italic",
                                     textWrap: "wrap",
                                     fontWeight: "lighter",
+                                    whiteSpace: "pre-wrap",
+                                    wordBreak: "break-word"
                                 }}
                             >
                                 {message.body}
@@ -124,7 +126,10 @@ const ChatMessage = ({ message }: ChatMessagePropsType) => {
                 case MessageTypeEnum.TEXT:
                     return (
                         <Typography fontSize={18} sx={{ marginRight: "35px" }} component="div">
-                            <pre style={{ textWrap: "wrap" }}>{message.body}</pre>
+                            <pre style={{
+                                textWrap: "wrap", whiteSpace: "pre-wrap",
+                                wordBreak: "break-word"
+                            }}>{message.body}</pre>
                         </Typography>
                     );
                 default:
