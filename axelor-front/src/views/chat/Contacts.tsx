@@ -97,7 +97,7 @@ export default function Contacts({ variant, setTransition }: { variant: ChatBoxV
           justifyContent="space-between"
           sx={{ backgroundColor: "#fff", width: "100%", padding: 1 }}
         >
-          <Typography variant="subtitle1" color="#2283D9" fontSize="17px" sx={{ flexGrow: 1 }}>
+          <Typography variant="subtitle1" color="rgb(63, 81, 181)" fontSize="17px" sx={{ flexGrow: 1 }}>
             Чаты
           </Typography>
           <ContactDrawer selectedContactGroup={selectedContactGroup} />
@@ -145,6 +145,7 @@ export default function Contacts({ variant, setTransition }: { variant: ChatBoxV
         "&::-webkit-scrollbar-thumb:hover": {
           backgroundColor: "#555",
         },
+        paddingBottom: '200px'
       }}
       >
         {chats[selectedContactGroup].map((contact: ClientType | ColleaguesType) => {
