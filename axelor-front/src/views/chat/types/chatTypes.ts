@@ -174,6 +174,7 @@ export enum AppelTypeEnum {
     instagram = "instagram",
     telegram = "telegram",
     call = "call",
+    onlineChat = "onlineChat"
 }
 export interface TransferType {
     id: number;

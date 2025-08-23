@@ -257,6 +257,7 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
                     height: `100%`,
                     overflow: "auto",
                     overflowY: "auto",
+                    position: 'relative',
                     "&::-webkit-scrollbar": {
                         width: "8px",
                     },

@@ -11,7 +11,26 @@ interface chatFileFormDataType {
   caption?: string;
   variant: ChatBoxVariant;
 }
+
 const CHAT_URL = import.meta.env.VITE_PROXY_CHAT_URL;
+const csrfToken = getCookie("CSRF-TOKEN");
+
+export function getCookie(name: string): string | null {
+  let cookieName = encodeURIComponent(name) + "=",
+    cookieStart = document.cookie.indexOf(cookieName),
+    cookieValue = null,
+    cookieEnd;
+
+  if (cookieStart > -1) {
+    cookieEnd = document.cookie.indexOf(";", cookieStart);
+    if (cookieEnd === -1) {
+      cookieEnd = document.cookie.length;
+    }
+    cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookieEnd));
+  }
+
+  return cookieValue;
+}
 
 
 interface useChatFileStoreStype {
@@ -30,7 +49,7 @@ export const useChatFileStore = create<useChatFileStoreStype>()((set, get) => ({
         formData.append("caption", JSON.stringify(caption));
       }
       const domen = CHAT_URL;
-      console.log("domen: ",domen)
+      console.log("domen: ", domen)
       const res = await fetch("https://" + domen + "/uploadFileWhatsapp", {
         method: "POST",
         body: formData,
@@ -53,7 +72,7 @@ export const useChatFileStore = create<useChatFileStoreStype>()((set, get) => ({
       if (caption && caption !== "") {
         formData.append("caption", JSON.stringify(caption));
       }
-      const domen = CHAT_URL; 
+      const domen = CHAT_URL;
       const res = await fetch("https://" + domen + "/uploadFileAxelor", {
         method: "POST",
         body: formData,
