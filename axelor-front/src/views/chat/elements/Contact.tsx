@@ -155,7 +155,7 @@ const Contact = memo(({ contact, setTransition }: { contact: ClientType | Collea
     (contact: ClientType | ColleaguesType) => {
       switch (contact?.lastMessage?.type) {
         case MessageTypeEnum.TEXT: {
-          return <Typography fontSize={16}>{contact?.lastMessage?.body.slice(0, 40) + "..."}</Typography>;
+          return <Typography fontSize={16}>{contact?.lastMessage?.body?.slice(0, 40) + "..."}</Typography>;
         }
         case MessageTypeEnum.IMAGE: {
           return (
@@ -168,7 +168,7 @@ const Contact = memo(({ contact, setTransition }: { contact: ClientType | Collea
           return (
             <Stack direction="row" alignItems="center" spacing={0.5}>
               <Description sx={{ width: "18px", height: "18px" }} />{" "}
-              <Typography fontSize={11}>{contact.lastMessage.fileName}</Typography>
+              <Typography fontSize={11}>{contact?.lastMessage?.fileName}</Typography>
             </Stack>
           );
         }
@@ -196,7 +196,7 @@ const Contact = memo(({ contact, setTransition }: { contact: ClientType | Collea
         case MessageTypeEnum.COMMENTARY: {
           return (
             <Stack>
-              <Typography fontSize={14}>{contact?.lastMessage?.body.slice(0, 40) + "..."}</Typography>
+              <Typography fontSize={14}>{contact?.lastMessage?.body?.slice(0, 40) + "..."}</Typography>
             </Stack>
           );
         }
