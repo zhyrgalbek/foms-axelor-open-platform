@@ -49,7 +49,7 @@ export const useChatMessage = create(
       },
     }),
     {
-      name: "useChatMessage",
+      name: "useOnlineChatMessage",
     }
   )
 );

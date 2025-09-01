@@ -155,7 +155,7 @@ const Contact = memo(({ contact, setTransition }: { contact: ClientType | Collea
     (contact: ClientType | ColleaguesType) => {
       switch (contact?.lastMessage?.type) {
         case MessageTypeEnum.TEXT: {
-          return <Typography fontSize={16}>{contact?.lastMessage?.body.slice(0, 40) + "..."}</Typography>;
+          return <Typography fontSize={16}>{contact?.lastMessage?.body?.slice(0, 40) + "..."}</Typography>;
         }
         case MessageTypeEnum.IMAGE: {
           return (
