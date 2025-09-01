@@ -141,7 +141,7 @@ export default function GetOnlineChat() {
                         // border: '1px solid red'
                     }}>
                     <Stack justifyContent="space-between" direction="row" alignItems="center">
-                        <Typography variant="h6" sx={{ mt: 0.3 }}>Online-chat</Typography>
+                        <Typography variant="h6" sx={{ mt: 0.3 }}>Онлайн-чат</Typography>
                         <IconButton onClick={onClearIconOnlineChat} >
                             <ClearIcon />
                         </IconButton>

@@ -6,10 +6,9 @@ import { useChatsStore as WhatsappChatsStore } from "./whatsapp/store/chatsStore
 import { useChatsStore as OnlineChatsStore } from "./online-chat/store/chatsStore";
 import { useChatStore as OnlineChatStore } from "./online-chat/store/chatStore";
 import { useChatStore as WhatsappChatStore } from "./whatsapp/store/chatStore";
-import ChatIcon from '@mui/icons-material/Chat';
 import GetWhatsappChat from "./GetWhatsappChat";
 import GetOnlineChat from "./GetOnlineChat";
-import OnlineChatIcon from "@/assets/chat/online-chat-icon.svg";
+import OnlineChatIcon from "../../assets/chat/online-chat-icon.svg?react";
 
 export default function ChatInterface() {
     const { chats: whatsappChats } = WhatsappChatsStore(state => state);
@@ -82,7 +81,11 @@ export default function ChatInterface() {
                     >
                         <Badge badgeContent={getAllCount(0, onlineChats)} color="primary"></Badge>
                     </Stack>
-                    <Box sx={{ width: '16px', height: '16px', color: '#fff', backgroundImage: `url(${OnlineChatIcon})`, backgroundRepeat: 'no-repeat' }}></Box>
+                    <Box sx={{
+                        width: '16px', height: '16px', color: '#fff'
+                    }}>
+                        <OnlineChatIcon style={{ fill: "currentcolor", marginTop: '-22px', width: '16px', height: '16px' }} />
+                    </Box>
                 </IconButton>
             </Tooltip>
         </Box>
