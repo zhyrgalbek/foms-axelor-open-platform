@@ -13,8 +13,9 @@ import { useNotificationStore } from "./notificationStore";
 import { ChatBoxVariant, ChatType, ClientType, ColleaguesType, HttpStatusEnum, LastMessageType, MemberType, MessageType, SocketStoreEventType, StatusMessageEnum, SuccessMessageEnum, TemplateType } from "../types/chatTypes";
 import { useWhatsappTemplate } from "./whatsappTemplate";
 import { getStatusTemplate } from "../helpers/helpers";
-const CHAT_URL = import.meta.env.VITE_PROXY_CHAT_URL;
-const CHAT_KEY = import.meta.env.VITE_PROXY_CHAT_KEY
+
+const CHAT_URL_WS = import.meta.env.VITE_PROXY_ONLINECHAT_WS;
+const CHAT_KEY = import.meta.env.VITE_PROXY_ONLINECHAT_KEY;
 
 interface ChatMessage {
   chatId: number;
@@ -29,7 +30,7 @@ interface socketStoretype {
   clearSocket: () => void;
   startSocket: ({ type }: { type: ChatBoxVariant }) => void;
   closeSocket: () => void;
-  sendEvent: ({}: SocketStoreEventType) => void;
+  sendEvent: ({ }: SocketStoreEventType) => void;
   _hasRehydrated?: boolean;
 }
 
@@ -46,11 +47,9 @@ export const useSocketStore = create(
       },
       startSocket: ({ type }: { type: ChatBoxVariant }) => {
         if (!get().socket || get().socket?.readyState !== WebSocket.OPEN) {
-          let url: string | undefined = CHAT_URL;
-          let key: string | undefined = CHAT_KEY;
-         
+
           set({ type: type });
-          let s = new WebSocket("wss://" + url + "/ws?apiKey=" + key);
+          let s = new WebSocket(`${CHAT_URL_WS}/ws?apiKey=${CHAT_KEY}`);
           s.onopen = async function () {
             const { getCurrentUserId } = useChatUserStore.getState();
             getCurrentUserId();
@@ -136,6 +135,7 @@ export const useSocketStore = create(
                 const { currentUserId } = useChatUserStore.getState();
                 const { messages, setOldMessageLoading, setMessageLoading, setMessages, setMessagesTotal } =
                   useChatMessage.getState();
+                console.log("messages: ", data.messages)
                 const { setScrollIntoViewBehavior, setScrollTop } = useScrollStore.getState();
                 if (data.error) {
                   enqueueSnackbar(data.error, { variant: "error" });
@@ -353,13 +353,13 @@ export const useSocketStore = create(
                       }
                       if (client.fullName === "" || client.phoneNumber === "") {
                         if (client?.id === currentChat?.id) {
-                          get().sendEvent({
-                            event: "getChat",
-                            data: {
-                              activeChat: currentChat,
-                              newMessageAuthor: null,
-                            },
-                          });
+                          // get().sendEvent({
+                          //   event: "getChat",
+                          //   data: {
+                          //     activeChat: currentChat,
+                          //     newMessageAuthor: null,
+                          //   },
+                          // });
                         }
                         return {
                           ...client,

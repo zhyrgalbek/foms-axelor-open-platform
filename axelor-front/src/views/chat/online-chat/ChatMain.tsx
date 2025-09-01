@@ -177,7 +177,6 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            console.log("isAtBottom: ", isAtBottom)
             if (isAtBottom) {
                 messageEndRef.current?.scrollIntoView({ behavior: scrollIntoViewBehavior });
 
@@ -232,7 +231,7 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
                 background: "#f5f5f5",
                 overflow: "hidden",
                 position: "relative",
-                marginTop: '89px',
+                marginTop: '68px',
                 backgroundColor: "rgba(0,0,0,0.15)",
                 // paddingTop: '100px',
                 "::before": {
@@ -345,30 +344,31 @@ const ChatMain = ({ order, ...props }: ChatMainPropsType) => {
                         );
                     }, [] as JSX.Element[])}
                 {showMessageEndRef && <Box ref={messageEndRef}></Box>}
-                {!isAtBottom && (
-                    <IconButton
-                        sx={{
-                            borderRadius: "50%",
-                            position: "absolute",
-                            bottom: "10px",
-                            right: "10px",
-                            bgcolor: "#3f51b5",
-                            color: "#fff",
-                            boxShadow: 3,
-                            ":hover": {
-                                bgcolor: "#3f51b5",
-                            },
-                        }}
-                        onClick={onClickExpandMoreIcon}
-                    >
-                        <ExpandMoreIcon />
-                    </IconButton>
-                )}
+
             </Stack>
             {answerSelectMessage && (
                 <Suspense>
                     <AnswerMessage />
                 </Suspense>
+            )}
+            {!isAtBottom && (
+                <IconButton
+                    sx={{
+                        borderRadius: "50%",
+                        position: "absolute",
+                        bottom: "10px",
+                        right: "10px",
+                        bgcolor: "#3f51b5",
+                        color: "#fff",
+                        boxShadow: 3,
+                        ":hover": {
+                            bgcolor: "#3f51b5",
+                        },
+                    }}
+                    onClick={onClickExpandMoreIcon}
+                >
+                    <ExpandMoreIcon />
+                </IconButton>
             )}
         </Box>
     );
