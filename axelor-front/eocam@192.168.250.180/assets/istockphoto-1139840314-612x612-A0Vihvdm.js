@@ -1,0 +1,1 @@
+import{o,j as t}from"./index-DBorxwL4.js";const r=o(t.jsx("path",{d:"M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"})),s=""+new URL("istockphoto-1139840314-612x612-De3cuu-Q.jpg",import.meta.url).href;export{s as C,r as E};
