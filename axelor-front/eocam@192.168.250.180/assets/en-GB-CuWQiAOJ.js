@@ -1,1 +1,0 @@
-import{f as a,c as t,l as o,m as e}from"./index-DBorxwL4.js";import{f as m}from"./formatLong-B7_NWdOC.js";const f={code:"en-GB",formatDistance:a,formatLong:m,formatRelative:t,localize:o,match:e,options:{weekStartsOn:1,firstWeekContainsDate:4}};export{f as default,f as enGB};

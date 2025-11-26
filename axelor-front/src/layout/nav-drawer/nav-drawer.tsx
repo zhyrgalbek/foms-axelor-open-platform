@@ -14,7 +14,7 @@ import { MenuItem, Tag } from "@/services/client/meta.types";
 import { sanitize, unaccent } from "@/utils/sanitize";
 import { useSidebar } from "./hook";
 
-import AppIcon from "../../assets/axelor-icon.ico?react";
+import AppIcon from "../../assets/axelor-icon.svg?react";
 import AppLogo from "../../assets/axelor.svg?react";
 
 import styles from "./nav-drawer.module.scss";
