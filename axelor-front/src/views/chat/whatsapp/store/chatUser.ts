@@ -1,6 +1,6 @@
 import { enqueueSnackbar } from "notistack";
 import { create } from "zustand";
-
+const CONTEXT = import.meta.env.VITE_PROXY_CONTEXT;
 interface useChatUserType {
   currentUserId: {
     id: number;
@@ -12,7 +12,7 @@ export const useChatUserStore = create<useChatUserType>()((set, get) => ({
   currentUserId: null,
   getCurrentUserId: async () => {
     try {
-      const response = await fetch("/foms/ws/user/id", {
+      const response = await fetch(CONTEXT + "/ws/user/id", {
         method: "GET",
       });
       if (response.ok) {

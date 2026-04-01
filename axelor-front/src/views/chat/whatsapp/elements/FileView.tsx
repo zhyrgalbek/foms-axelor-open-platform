@@ -6,6 +6,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { Stack, Typography } from "@mui/material";
 import { memo } from "react";
 import { MessageType } from "../types/chatTypes";
+import "../../index.css";
 const DOMAIN = import.meta.env.VITE_PROXY_TARGET;
 const CONTEXT = import.meta.env.VITE_PROXY_CONTEXT;
 interface FileViewPropsType {
@@ -59,6 +60,7 @@ const FileView = memo(({ message, answer }: FileViewPropsType) => {
                             marginRight: "40px",
                             height: "30px",
                             cursor: "pointer",
+                            fontFamily: "Roboto"
                         }}
                         onClick={handleDownload}
                     >
