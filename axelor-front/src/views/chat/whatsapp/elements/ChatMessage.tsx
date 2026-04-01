@@ -24,6 +24,7 @@ import { errors } from "../helpers/errors";
 import { useChatStore } from "../store/chatStore";
 import { useChatUserStore } from "../store/chatUser";
 import { AppelTypeEnum, ChatType, MessageType, MessageTypeEnum } from "../types/chatTypes";
+import "../index.css";
 const DOMAIN = import.meta.env.VITE_PROXY_TARGET;
 const CONTEXT = import.meta.env.VITE_PROXY_CONTEXT;
 
@@ -128,7 +129,8 @@ const ChatMessage = ({ message }: ChatMessagePropsType) => {
                         <Typography fontSize={18} sx={{ marginRight: "35px" }} component="div">
                             <pre style={{
                                 textWrap: "wrap", whiteSpace: "pre-wrap",
-                                wordBreak: "break-word"
+                                wordBreak: "break-word",
+                                fontFamily: "Roboto"
                             }}>{message.body}</pre>
                         </Typography>
                     );

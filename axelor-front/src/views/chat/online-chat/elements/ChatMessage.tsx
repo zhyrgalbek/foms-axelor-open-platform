@@ -128,7 +128,8 @@ const ChatMessage = ({ message }: ChatMessagePropsType) => {
                         <Typography fontSize={18} sx={{ marginRight: "35px" }} component="div">
                             <pre style={{
                                 textWrap: "wrap", whiteSpace: "pre-wrap",
-                                wordBreak: "break-word"
+                                wordBreak: "break-word",
+                                fontFamily: "Roboto"
                             }}>{message.body}</pre>
                         </Typography>
                     );
