@@ -10,6 +10,7 @@ import { memo, useCallback } from "react";
 import { useChatStore } from "../store/chatStore";
 import { useChatMessage } from "../store/message";
 import { MessageTypeEnum } from "../types/chatTypes";
+import "../index.css";
 const DOMAIN = import.meta.env.VITE_PROXY_TARGET;
 const CONTEXT = import.meta.env.VITE_PROXY_CONTEXT;
 function AnswerMessage() {
@@ -57,7 +58,7 @@ function AnswerMessage() {
                             )}
                             {answerSelectMessage.type === MessageTypeEnum.TEXT && (
                                 <Typography fontSize={11.5} sx={{ marginLeft: "10px" }}>
-                                    <pre style={{ textWrap: "wrap" }}>{answerSelectMessage.body}</pre>
+                                    <pre style={{ textWrap: "wrap", fontFamily: "Roboto" }}>{answerSelectMessage.body}</pre>
                                 </Typography>
                             )}
                             {answerSelectMessage.type === MessageTypeEnum.TEMPLATE && (

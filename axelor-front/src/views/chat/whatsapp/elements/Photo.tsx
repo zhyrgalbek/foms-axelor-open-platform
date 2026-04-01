@@ -4,6 +4,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { MessageType } from "../types/chatTypes";
+import "../index.css";
 const DOMAIN = import.meta.env.VITE_PROXY_TARGET;
 const CONTEXT = import.meta.env.VITE_PROXY_CONTEXT;
 interface PhotoPropsType {
@@ -59,7 +60,7 @@ const Photo = memo(({ message, answer }: PhotoPropsType) => {
                 </Stack>
                 {message.caption && (
                     <Typography fontSize={16} sx={{ marginRight: "30px", paddingTop: '10px' }}>
-                        {<pre style={{ textWrap: "wrap" }}>{message.caption}</pre>}
+                        {<pre style={{ textWrap: "wrap", fontFamily: "Roboto" }}>{message.caption}</pre>}
                     </Typography>
                 )}
             </Box>
